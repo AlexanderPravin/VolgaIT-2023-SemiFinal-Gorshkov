@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-Api.VolgaIT", "VolgaIT-2023-SemiFinal\Web-Api.VolgaIT.csproj", "{65EA5EF1-9747-46DC-8E68-0FB75FE82D60}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Api", "Web Api", "{0878045B-EA3B-4A78-BC2F-6B1081FED716}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{547B6970-2715-4BA5-A683-F70A5E467F2D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.VolgaIT", "Domain.VolgaIT\Domain.VolgaIT.csproj", "{CB57CCE2-EAC6-495B-B696-11D82499B745}"
@@ -28,6 +30,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{65EA5EF1-9747-46DC-8E68-0FB75FE82D60} = {0878045B-EA3B-4A78-BC2F-6B1081FED716}
 		{CB57CCE2-EAC6-495B-B696-11D82499B745} = {547B6970-2715-4BA5-A683-F70A5E467F2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
