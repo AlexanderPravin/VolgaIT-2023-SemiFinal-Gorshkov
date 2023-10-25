@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace Domain.VolgaIT.Entities
 {
@@ -19,20 +15,29 @@ namespace Domain.VolgaIT.Entities
 
         // Indicates is this transport can be rented
         [Required]
-        public bool CanBeRented { get; set; }
+        public bool CanBeRented { get; set; } = false;
 
         // Shows whats transport is this
-        [Required]
-        public TransportType TransportType { get; set; }
+        private TransportType transportType;
+
+        public string TransportType
+        {
+            get { return transportType.ToString(); }
+            set 
+            {
+                if (!Enum.TryParse(value.Trim(), true, out transportType)) 
+                    throw new Exception("Incorrect transport type");
+            }
+        }
 
         [Required(ErrorMessage = "Model is required")]
-        public string? Model { get; set; }
+        public string Model { get; set; } = null!;
 
         [Required(ErrorMessage = "Color is required")]
-        public string? Color { get; set; }
+        public string Color { get; set; } = null!;
 
         [Required(ErrorMessage = "Identifier is required")]
-        public string? Identifier { get; set; }
+        public string Identifier { get; set; } = null!;
 
         public string? Description { get; set; }
 
@@ -53,7 +58,12 @@ namespace Domain.VolgaIT.Entities
             set
             {
                 if (CanBeRented) minutePrice = value;
-                else minutePrice = null;
+                else
+                {
+                    minutePrice = null;
+
+                    throw new Exception("Can`t set price, because transport can`t be rent");
+                }
             }
         }
 
@@ -68,17 +78,20 @@ namespace Domain.VolgaIT.Entities
             set
             {
                 if (CanBeRented) dayPrice = value;
-                else dayPrice = null;
+                else 
+                {
+                    dayPrice = null;
+
+                    throw new Exception("Can`t set price, because transport can`t be rent");
+                }
+
             }
         }
 
         [Required(ErrorMessage = "Owner is required")]
-        public User? Owner { get; set; }
+        public User Owner { get; set; } = null!;
 
         public bool IsRentedNow { get; set; } = false;
-
-        //Information about current rent, could be null
-        public RentInfo? CurrentRent { get; set; }
 
         //Information about rent history
         public ICollection<RentInfo> RentHistory { get; set; } = new List<RentInfo>();

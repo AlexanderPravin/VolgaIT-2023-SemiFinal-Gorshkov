@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace Domain.VolgaIT.Entities
 {
@@ -17,15 +13,11 @@ namespace Domain.VolgaIT.Entities
     {
         public Guid Id { get; set; }
 
-        public Guid TransportId { get; set; } 
-
-        public Guid UserId { get; set; }
-
-        [Required]
         private DateTime timeStart;
 
         private DateTime? timeEnd;
 
+        [Required]
         public string TimeStart
         {
             get
@@ -53,18 +45,34 @@ namespace Domain.VolgaIT.Entities
 
         [Required]
         public double PriceOfUnit { get; set; }
-        
-        public PriceType PriceType { get; set; }
+
+        private PriceType priceType;
+
+        [Required]
+        public string PriceType
+        {
+            get { return priceType.ToString(); }
+            set
+            {
+                if (!Enum.TryParse(value, true, out priceType)) throw new Exception("Incorrect price type");
+            }
+        }
 
         public double? FinalPrice { get; set; }
 
-        [Required(ErrorMessage ="Transport is required")]
-        public Transport? Transport { get; set; }
+        [Required(ErrorMessage = "Transport is required")]
+        public Transport Transport { get; set; } = null!;
 
-        [Required(ErrorMessage ="User is required")]
-        public User? User { get; set; }
+        [Required]
+        public Guid TransportId { get; set; }
 
-        [Required(ErrorMessage ="Owner is required")]
-        public User? Owner { get; set; }    
+        [Required]
+        public Guid UserId { get; set; }
+
+        [Required(ErrorMessage = "User is required")]
+        public User CurrentUser { get; set; } = null!;
+
+        [Required(ErrorMessage = "Owner is required")]
+        public User Owner { get; set; } = null!;    
     }
 }
