@@ -10,24 +10,23 @@ namespace InfrastructureTest
             var testHelper = new TestHelper();
             var UserRepository = testHelper.UnitOfWork.UserRepository;
 
-            User user = new User
+            User user = new()
             {
                 Balance = 100,
                 Id = Guid.NewGuid(),
                 Login = "TestLogin",
                 Password = "TestPassword",
-                Role = "Admin"
+                Role = UserRole.User
             };
 
             user.RentHistory.Add(new RentInfo
             {
                 Id = Guid.NewGuid(),
                 FinalPrice = 100,
-                Owner = user,
                 PriceOfUnit = 100,
-                PriceType = "Minutes",
+                PriceType = PriceType.Minutes,
                 TimeEnd = null,
-                TimeStart = $"{DateTime.Now}",
+                TimeStart = DateTime.Now,
                 CurrentUser = user,
                 UserId = user.Id,
             });
@@ -46,14 +45,14 @@ namespace InfrastructureTest
                 Longitude = 100,
                 MinutePrice = 100,
                 Model = "Toyota Mark 2 Chaser",
-                TransportType = "Car",
+                TransportType = TransportType.Car,
                 Owner = user,
                 RentHistory = user.RentHistory,
             });
 
             user.RentHistory.First().Transport = user.OwnedTransport.First();
 
-            await UserRepository.AddEntityAsync(user);
+            UserRepository.AddEntity(user);
             await testHelper.UnitOfWork.SaveChangesAsync();
 
             var userFromDB = await UserRepository.GetEntityByIdAsync(user.Id.ToString());
@@ -67,22 +66,16 @@ namespace InfrastructureTest
         {
             var TestHelper = new TestHelper();
 
-            User user = new User
+            User user = new()
             {
                 Balance = 100,
                 Id = Guid.NewGuid(),
                 Password = "TestPassword",
-                Role = "Admin"
+                Role = UserRole.Admin
             };
-
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex);
-            }
-
             try
             {
-                await TestHelper.UnitOfWork.UserRepository.AddEntityAsync(user);
+                TestHelper.UnitOfWork.UserRepository.AddEntity(user);
                 await TestHelper.UnitOfWork.SaveChangesAsync();
                 Assert.Fail();
             }

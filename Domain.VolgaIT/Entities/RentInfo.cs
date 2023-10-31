@@ -12,67 +12,36 @@ namespace Domain.VolgaIT.Entities
     public class RentInfo
     {
         public Guid Id { get; set; }
-
-        private DateTime timeStart;
-
-        private DateTime? timeEnd;
+        public bool IsActive { get; set; }
 
         [Required]
-        public string TimeStart
-        {
-            get
-            {
-                return timeStart.ToString("O");
-            }
-            set
-            {
-                timeStart = DateTime.Parse(value, null, System.Globalization.DateTimeStyles.RoundtripKind);
-            }
-        }
+        public DateTime TimeStart { get; set; }
 
-        public string? TimeEnd
-        {
-            get
-            {
-                return timeEnd?.ToString("O");
-            }
-            set
-            {
-                if (value == null) timeEnd = null;
-                else timeEnd = DateTime.Parse(value, null, System.Globalization.DateTimeStyles.RoundtripKind);
-            }
-        }
+        public DateTime? TimeEnd { get; set; }
 
-        [Required]
+        [Required, Range(0, double.MaxValue)]
         public double PriceOfUnit { get; set; }
 
-        private PriceType priceType;
-
         [Required]
-        public string PriceType
-        {
-            get { return priceType.ToString(); }
-            set
-            {
-                if (!Enum.TryParse(value, true, out priceType)) throw new Exception("Incorrect price type");
-            }
-        }
+        [EnumDataType(typeof(PriceType))]
+        public PriceType PriceType { get;set; }
 
+        [Range(0, double.MaxValue)]
         public double? FinalPrice { get; set; }
 
         [Required(ErrorMessage = "Transport is required")]
-        public Transport Transport { get; set; } = null!;
+        public Transport Transport { get; set; } = default!;
 
         [Required]
         public Guid TransportId { get; set; }
 
         [Required]
         public Guid UserId { get; set; }
-
+        [Required]
+        public Guid OwnerId { get;set; }
+        [Required]
+        public User Owner { get; set; }
         [Required(ErrorMessage = "User is required")]
-        public User CurrentUser { get; set; } = null!;
-
-        [Required(ErrorMessage = "Owner is required")]
-        public User Owner { get; set; } = null!;    
+        public User User { get; set; } = default!; 
     }
 }

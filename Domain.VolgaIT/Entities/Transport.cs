@@ -13,31 +13,20 @@ namespace Domain.VolgaIT.Entities
     {
         public Guid Id { get; set; }
 
-        // Indicates is this transport can be rented
         [Required]
         public bool CanBeRented { get; set; } = false;
 
-        // Shows whats transport is this
-        private TransportType transportType;
-
-        public string TransportType
-        {
-            get { return transportType.ToString(); }
-            set 
-            {
-                if (!Enum.TryParse(value.Trim(), true, out transportType)) 
-                    throw new Exception("Incorrect transport type");
-            }
-        }
+        [EnumDataType(typeof(TransportType))]
+        public TransportType TransportType { get; set; }
 
         [Required(ErrorMessage = "Model is required")]
-        public string Model { get; set; } = null!;
+        public string Model { get; set; } = default!;
 
         [Required(ErrorMessage = "Color is required")]
-        public string Color { get; set; } = null!;
+        public string Color { get; set; } = default!;
 
         [Required(ErrorMessage = "Identifier is required")]
-        public string Identifier { get; set; } = null!;
+        public string Identifier { get; set; } = default!;
 
         public string? Description { get; set; }
 
@@ -47,53 +36,19 @@ namespace Domain.VolgaIT.Entities
         [Required]
         public double Longitude { get; set; }
 
-        private double? minutePrice;
+        [Range(0, double.MaxValue)]
+        public double? MinutePrice { get; set; }
 
-        public double? MinutePrice
-        {
-            get
-            {
-                return minutePrice;
-            }
-            set
-            {
-                if (CanBeRented) minutePrice = value;
-                else
-                {
-                    minutePrice = null;
-
-                    throw new Exception("Can`t set price, because transport can`t be rent");
-                }
-            }
-        }
-
-        private double? dayPrice;
-
-        public double? DayPrice
-        {
-            get
-            {
-                return dayPrice;
-            }
-            set
-            {
-                if (CanBeRented) dayPrice = value;
-                else 
-                {
-                    dayPrice = null;
-
-                    throw new Exception("Can`t set price, because transport can`t be rent");
-                }
-
-            }
-        }
+        [Range(0, double.MaxValue)]
+        public double? DayPrice { get; set; }
+        [Required]
+        public Guid OwnerId { get; set; }
 
         [Required(ErrorMessage = "Owner is required")]
-        public User Owner { get; set; } = null!;
+        public User Owner { get; set; } = default!;
 
         public bool IsRentedNow { get; set; } = false;
 
-        //Information about rent history
         public ICollection<RentInfo> RentHistory { get; set; } = new List<RentInfo>();
 
     }

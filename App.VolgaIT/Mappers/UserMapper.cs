@@ -4,19 +4,23 @@ using App.VolgaIT.DTOs;
 
 namespace App.VolgaIT.Mappers
 {
-    public class UserMapper : IMapper<User, UserDTO>
+    public class UserMapper : IMapper<User, UserResponseDTO>
     {
-        public static UserDTO CreateDTOFromEntity(User user)
+        public static UserResponseDTO CreateDTOFromEntity(User user)
         {
-            return new UserDTO
+            return new UserResponseDTO
             {
-                UserName = user.Login,
-                Password = user.Password
+                Id = user.Id.ToString(),
+                Login = user.Login,
+                Password = user.Password,
+                Balance = user.Balance,
+                Role = user.Role.ToString()
             };
         }
-        public static IEnumerable<UserDTO> CreateDTOsFromEntities(IEnumerable<User> users)
+
+        public static IEnumerable<UserResponseDTO> CreateDTOsFromEntities(IEnumerable<User> users)
         {
-            var UserDtoList = new List<UserDTO>();
+            var UserDtoList = new List<UserResponseDTO>();
 
             foreach(var user in users)
             {
