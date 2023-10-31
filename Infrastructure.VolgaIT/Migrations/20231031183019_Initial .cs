@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,7 +18,7 @@ namespace Infrastructure.VolgaIT.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Login = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    Balance = table.Column<int>(type: "integer", nullable: false),
+                    Balance = table.Column<double>(type: "double precision", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -31,7 +32,7 @@ namespace Infrastructure.VolgaIT.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CanBeRented = table.Column<bool>(type: "boolean", nullable: false),
-                    TransportType = table.Column<string>(type: "text", nullable: false),
+                    TransportType = table.Column<int>(type: "integer", nullable: false),
                     Model = table.Column<string>(type: "text", nullable: false),
                     Color = table.Column<string>(type: "text", nullable: false),
                     Identifier = table.Column<string>(type: "text", nullable: false),
@@ -58,10 +59,11 @@ namespace Infrastructure.VolgaIT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TimeStart = table.Column<string>(type: "text", nullable: false),
-                    TimeEnd = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    TimeStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    TimeEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     PriceOfUnit = table.Column<double>(type: "double precision", nullable: false),
-                    PriceType = table.Column<string>(type: "text", nullable: false),
+                    PriceType = table.Column<int>(type: "integer", nullable: false),
                     FinalPrice = table.Column<double>(type: "double precision", nullable: true),
                     TransportId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),

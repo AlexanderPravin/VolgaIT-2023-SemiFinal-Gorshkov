@@ -13,36 +13,17 @@ namespace Domain.VolgaIT.Entities
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Login is required")]
-        public string Login { get; set; } = null!;
+        public string Login { get; set; } = default!;
 
         [Required(ErrorMessage = "Password is required")]
-        public string Password { get; set; } = null!;
+        public string Password { get; set; } = default!;
 
-        private int balance = 0;
-
-        public int Balance 
-        {
-            get { return balance; }
-            set
-            {
-                if (value < 0) throw new Exception("Balance should be higher then zero");
-                balance = value;
-            }
-        }
-        private UserRole role;
+        [Range(0, int.MaxValue)]
+        public double Balance { get; set; } = 0;
 
         [Required]
-        public string Role 
-        {
-            get
-            {
-                return role.ToString() ;
-            } 
-            set
-            {
-                if (!Enum.TryParse(value, true, out role)) throw new Exception("Not valid role recived");
-            }
-        }
+        [EnumDataType(typeof(UserRole))]
+        public UserRole Role { get; set; } = UserRole.User;
         
         public ICollection<RentInfo> RentHistory { get; set; } = new List<RentInfo>();
 

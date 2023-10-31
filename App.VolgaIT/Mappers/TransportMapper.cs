@@ -4,15 +4,16 @@ using Domain.VolgaIT.Interfaces;
 
 namespace App.VolgaIT.Mappers
 {
-    public class TransportMapper : IMapper<Transport, TransportDTO>
+    public class TransportMapper : IMapper<Transport, TransportResponseDTO>
     {
 
-        public static TransportDTO CreateDTOFromEntity(Transport transport)
+        public static TransportResponseDTO CreateDTOFromEntity(Transport transport)
         {
-            return new TransportDTO
-            {
+            return new TransportResponseDTO
+            { 
+                Id = transport.Id.ToString(),
                 CanBeRented = transport.CanBeRented,
-                TransportType = transport.TransportType,
+                TransportType = transport.TransportType.ToString(),
                 Model = transport.Model,
                 Color = transport.Color,
                 Identifier = transport.Identifier,
@@ -21,12 +22,14 @@ namespace App.VolgaIT.Mappers
                 Longitude = transport.Longitude,
                 MinutePrice = transport.MinutePrice,
                 DayPrice = transport.DayPrice,
+                IsRentedNow = transport.IsRentedNow,
+                OwnerId = transport.Owner.Id.ToString()
             };
         }
 
-        public static IEnumerable<TransportDTO> CreateDTOsFromEntities(IEnumerable<Transport> transports)
+        public static IEnumerable<TransportResponseDTO> CreateDTOsFromEntities(IEnumerable<Transport> transports)
         {
-            var TransportDTOList = new List<TransportDTO>();
+            var TransportDTOList = new List<TransportResponseDTO>();
 
             foreach (var transport in transports)
             {

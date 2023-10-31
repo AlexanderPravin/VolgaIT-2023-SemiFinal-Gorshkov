@@ -15,9 +15,9 @@ namespace Infrastructure.VolgaIT.Repositories
             _context = context;
         }
 
-        public virtual async Task AddEntityAsync(TEntity entity)
+        public virtual void AddEntity(TEntity entity)
         {
-            await _context.Set<TEntity>().AddAsync(entity);
+            _context.Set<TEntity>().AddAsync(entity);
         }
 
         public virtual void DeleteEntity(TEntity entity)
@@ -48,6 +48,13 @@ namespace Infrastructure.VolgaIT.Repositories
         public virtual void UpdateEntity(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
+        }
+
+        public virtual async Task<ICollection<TEntity>> GetEntitiesInRangeAsync(int start, int count)
+        {
+            if (start + count > _context.Set<TEntity>().Count()) throw new ArgumentException("Index was out of range");
+
+            return await _context.Set<TEntity>().Skip(start).Take(count).ToListAsync();
         }
     }
 }

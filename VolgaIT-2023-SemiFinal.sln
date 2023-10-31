@@ -21,10 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.VolgaIT", "I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{03EF8FC0-10DC-4138-9A2A-F3FF0E9031DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureTest", "InfrastructureTest\InfrastructureTest.csproj", "{3BDEF8AA-77D4-495D-AF21-2BA37AF039C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureTest", "InfrastructureTest\InfrastructureTest.csproj", "{3BDEF8AA-77D4-495D-AF21-2BA37AF039C2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CB57CCE2-EAC6-495B-B696-11D82499B745} = {CB57CCE2-EAC6-495B-B696-11D82499B745}
 		{D93328A7-FE67-4A51-A177-4D1DC27C8C7E} = {D93328A7-FE67-4A51-A177-4D1DC27C8C7E}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{329D612F-94FF-401B-BAE0-854CE5CB775D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global

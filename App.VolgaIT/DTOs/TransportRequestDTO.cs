@@ -1,17 +1,17 @@
 ﻿
 namespace App.VolgaIT.DTOs
 {
-    public class TransportDTO
+    public class TransportRequestDTO
     {
         public bool CanBeRented { get; set; }
 
-        public string TransportType { get; set; } = null!;
+        public string TransportType { get; set; } = default!;
 
-        public string Model { get; set; } = null!;
+        public string Model { get; set; } = default!;
 
-        public string Color { get; set; } = null!;
+        public string Color { get; set; } = default!;
 
-        public string Identifier { get; set; } = null!;
+        public string Identifier { get; set; } = default!;
 
         public string? Description { get; set; }
 

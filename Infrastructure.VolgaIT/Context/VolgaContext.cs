@@ -5,7 +5,10 @@ namespace Infrastructure.VolgaIT.Context
 {
     public class VolgaContext : DbContext
     {
-        public VolgaContext(DbContextOptions<VolgaContext> options) : base(options) { }
+        public VolgaContext(DbContextOptions<VolgaContext> options) : base(options) 
+        {
+            
+        }
 
         public DbSet<User> Users { get; set; }
         
@@ -26,7 +29,7 @@ namespace Infrastructure.VolgaIT.Context
                 .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<RentInfo>()
-                .HasOne(e => e.CurrentUser)
+                .HasOne(e => e.User)
                 .WithMany(e => e.RentHistory)
                 .OnDelete(DeleteBehavior.ClientCascade)
                 .HasForeignKey(e => e.UserId)
@@ -38,6 +41,7 @@ namespace Infrastructure.VolgaIT.Context
                 .OnDelete(DeleteBehavior.ClientCascade)
                 .HasForeignKey(e => e.TransportId)
                 .IsRequired(false);
+
         }
     }
 }
