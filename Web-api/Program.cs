@@ -1,9 +1,11 @@
 using Infrastructure.VolgaIT.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using App.VolgaIT;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Infrastructure.VolgaIT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,13 +63,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddScoped<UnitOfWork>();
+
+builder.Services.AddRepository();
+builder.Services.AddServices();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 
 app.UseHttpsRedirection();
 
