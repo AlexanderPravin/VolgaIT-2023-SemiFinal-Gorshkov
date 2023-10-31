@@ -34,7 +34,7 @@ namespace App.VolgaIT.Services
             return result;
         }
 
-        public async Task CreateTransportAsync(AdminTransportRequestDTO dto)
+        public async Task<string> CreateTransportAsync(AdminTransportRequestDTO dto)
         {
             Transport transport = new()
             {
@@ -54,6 +54,7 @@ namespace App.VolgaIT.Services
 
             _unitOfWork.TransportRepository.AddEntity(transport);
             await _unitOfWork.SaveChangesAsync();
+            return transport.Id.ToString();
         }
 
         public async Task UpdateTransport(AdminTransportRequestDTO dto, string id)

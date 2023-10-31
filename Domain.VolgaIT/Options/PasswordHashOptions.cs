@@ -10,10 +10,10 @@ namespace Domain.VolgaIT.Options
     {
         public const string JsonSection = "PasswordHashOptions";
 
-        public int KeySize {  get; set; }
+        public int KeySize { get; set; } = 8;
 
-        public int SaltSize { get; set; }
+        public int SaltSize { get; set; } = 16;
 
-        public int Iterations { get; set; } 
+        public int Iterations { get; set; } = 1000;
     }
 }

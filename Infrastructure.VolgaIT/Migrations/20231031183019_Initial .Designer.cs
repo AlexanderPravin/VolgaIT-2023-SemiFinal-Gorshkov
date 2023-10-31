@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.VolgaIT.Migrations
 {
     [DbContext(typeof(VolgaContext))]
-    [Migration("20231022170352_Initial")]
+    [Migration("20231031183019_Initial ")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -34,22 +34,23 @@ namespace Infrastructure.VolgaIT.Migrations
                     b.Property<double?>("FinalPrice")
                         .HasColumnType("double precision");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
                     b.Property<double>("PriceOfUnit")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("PriceType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PriceType")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("TimeEnd")
-                        .HasColumnType("text");
+                    b.Property<DateTime?>("TimeEnd")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("TimeStart")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("TimeStart")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("TransportId")
                         .HasColumnType("uuid");
@@ -110,9 +111,8 @@ namespace Infrastructure.VolgaIT.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("TransportType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("TransportType")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -127,8 +127,8 @@ namespace Infrastructure.VolgaIT.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Balance")
-                        .HasColumnType("integer");
+                    b.Property<double>("Balance")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -159,16 +159,16 @@ namespace Infrastructure.VolgaIT.Migrations
                         .HasForeignKey("TransportId")
                         .OnDelete(DeleteBehavior.ClientCascade);
 
-                    b.HasOne("Domain.VolgaIT.Entities.User", "CurrentUser")
+                    b.HasOne("Domain.VolgaIT.Entities.User", "User")
                         .WithMany("RentHistory")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientCascade);
 
-                    b.Navigation("CurrentUser");
-
                     b.Navigation("Owner");
 
                     b.Navigation("Transport");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.VolgaIT.Entities.Transport", b =>

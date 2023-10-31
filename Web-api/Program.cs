@@ -6,12 +6,20 @@ using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Infrastructure.VolgaIT;
+using Domain.VolgaIT.Settings;
+using Domain.VolgaIT.Options;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.Configure<JwtOptions>(options =>
+    builder.Configuration.GetSection("JwtOptions")
+    );
+
+builder.Services.Configure<PasswordHashOptions>(options =>
+    builder.Configuration.GetSection("PasswordHashOptions")
+    );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -42,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
         });
     }
     );
+
 builder.Services.AddDbContext<VolgaContext>
     (options => options
     .UseNpgsql(builder.Configuration
@@ -54,17 +63,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
+            ValidIssuer = "TestIssuer",
             ValidateIssuer = true,
-            ValidIssuer = "JwtOptions:Issuer",
+
             ValidateLifetime = true,
-            ValidateAudience = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("JwpOptions:Secret")),
-            ValidateIssuerSigningKey = true
+
+            ValidateAudience = false,
+
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("asdfghjkl123456789qwe")),
+            ValidateIssuerSigningKey = true,
         };
     });
 
 builder.Services.AddScoped<UnitOfWork>();
-
 builder.Services.AddRepository();
 builder.Services.AddServices();
 

@@ -5,6 +5,7 @@ using Domain.VolgaIT.Settings;
 using Infrastructure.VolgaIT;
 using App.VolgaIT.Mappers;
 using Domain.VolgaIT.Entities;
+using Microsoft.Extensions.Options;
 
 namespace App.VolgaIT.Services
 {
@@ -13,7 +14,7 @@ namespace App.VolgaIT.Services
         private readonly UnitOfWork _unitOfWork;
         private readonly PasswordHelper _passwordHelper;
 
-        public AdminUserService(UnitOfWork unitOfWork, PasswordHashOptions passwordHashOptions)
+        public AdminUserService(UnitOfWork unitOfWork, IOptions<PasswordHashOptions> passwordHashOptions)
         {
             _unitOfWork = unitOfWork;
             _passwordHelper = new PasswordHelper(passwordHashOptions);
@@ -66,6 +67,7 @@ namespace App.VolgaIT.Services
 
             return UserMapper.CreateDTOsFromEntities(users);
         }
+
         public async Task DeleteUser(string id)
         {
             var user = await _unitOfWork.UserRepository.GetEntityByIdAsync(id) ?? throw new ArgumentException($"Can`t find user by {id}");

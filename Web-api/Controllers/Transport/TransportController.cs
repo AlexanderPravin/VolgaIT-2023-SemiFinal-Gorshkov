@@ -23,8 +23,8 @@ namespace VolgaIT_2023_SemiFinal.Controllers.Transport
         [HttpPost]
         public async Task<IActionResult> PostTransport(TransportRequestDTO transportRequestDTO)
         {
-            await _transportService.CreateTransport(transportRequestDTO, HttpContext.User.Claims.First(x => x.Value == ClaimTypes.Name).Value);
-            return Ok();
+            var res = await _transportService.CreateTransport(transportRequestDTO, HttpContext.User.Claims.First().Value);
+            return Ok(res);
         }
 
         [HttpPut("{id}")]

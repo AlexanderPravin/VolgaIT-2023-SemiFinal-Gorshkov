@@ -26,7 +26,7 @@ namespace App.VolgaIT.Services
             return TransportMapper.CreateDTOFromEntity(transport);
         }
 
-        public async Task CreateTransport(TransportRequestDTO dto, string login)
+        public async Task<string> CreateTransport(TransportRequestDTO dto, string login)
         {
             var owner = await _unitOfWork.UserRepository.GetEntityByAsync(x => x.Login == login) ?? throw new ArgumentException($"Can`t find user by {login}");
 
@@ -48,6 +48,7 @@ namespace App.VolgaIT.Services
 
             _unitOfWork.TransportRepository.AddEntity(transport);
             await _unitOfWork.SaveChangesAsync();
+            return transport.Id.ToString();
         }
 
         public async Task UpdateTransport(TransportRequestDTO dto, string id)

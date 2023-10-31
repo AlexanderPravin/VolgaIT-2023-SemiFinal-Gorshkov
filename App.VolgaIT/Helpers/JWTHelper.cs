@@ -17,7 +17,7 @@ namespace App.VolgaIT.Helpers
 
         public JWTHelper(JwtOptions options)
         {
-            _options = options;
+            _options = new JwtOptions();
         }
 
         public string GetJwtToken(User user)

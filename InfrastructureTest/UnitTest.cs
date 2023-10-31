@@ -27,7 +27,7 @@ namespace InfrastructureTest
                 PriceType = PriceType.Minutes,
                 TimeEnd = null,
                 TimeStart = DateTime.Now,
-                CurrentUser = user,
+                User = user,
                 UserId = user.Id,
             });
 

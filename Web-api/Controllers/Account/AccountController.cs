@@ -33,7 +33,7 @@ namespace VolgaIT_2023_SemiFinal.Controllers.Account
         }
 
         [HttpPut("Update")]
-        [Authorize]
+        [Authorize()]
         public async Task Update(UserRequestDTO UserDTO)
         {
             await _userService.UpdateUserAsync(UserDTO, HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Name).Value);

@@ -32,6 +32,7 @@ namespace VolgaIT_2023_SemiFinal.Controllers.Account
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> PostUser(AdminUserRequestDTO dto)
         {
             await _adminUserService.RegisterUserAsync(dto);

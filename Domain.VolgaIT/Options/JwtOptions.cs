@@ -10,10 +10,10 @@ namespace Domain.VolgaIT.Settings
     {
         public const string JsonSection = "JwtOptions";
 
-        public string Issuer { get; set; } = null!;
+        public string Issuer { get; set; } = "TestIssuer";
 
-        public string Secret { get;set; } = null!;
+        public string Secret { get;set; } = "asdfghjkl123456789qwe";
 
-        public int ExpiresHours { get; set; }
+        public int ExpiresHours { get; set; } = 2;
     }
 }

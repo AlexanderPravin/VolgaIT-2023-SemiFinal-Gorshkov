@@ -19,7 +19,9 @@ namespace App.VolgaIT
                 .AddScoped<AdminTransportService>()
                 .AddScoped<TransportService>()
                 .AddScoped<AdminUserService>()
-                .AddScoped<UserService>();
+                .AddScoped<UserService>()
+                .AddScoped<AdminRentService>();
+
         }
     }
 }

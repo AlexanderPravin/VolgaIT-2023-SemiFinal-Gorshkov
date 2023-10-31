@@ -63,7 +63,7 @@ namespace App.VolgaIT.Services.RentServices
             return RentMapper.CreateDTOsFromEntities(transport.RentHistory);
         }
 
-        public async Task RentTransport(string id, string rentType, string login)
+        public async Task<string> RentTransport(string id, string rentType, string login)
         {
             var transport = await _unitOfWork.TransportRepository.GetEntityByIdAsync(id) 
                 ?? throw new ArgumentException($"Can`t find transport by {id}");
@@ -109,6 +109,7 @@ namespace App.VolgaIT.Services.RentServices
             _unitOfWork.RentRepository.AddEntity(rentInfo);
 
             await _unitOfWork.SaveChangesAsync();
+            return rentInfo.Id.ToString();
         }
 
         public async Task EndRent(double latitude, double longitude, string id)

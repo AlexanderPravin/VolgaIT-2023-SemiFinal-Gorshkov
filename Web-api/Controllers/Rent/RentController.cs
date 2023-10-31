@@ -33,26 +33,26 @@ namespace VolgaIT_2023_SemiFinal.Controllers.Rent
         [HttpGet("{id}")]
         public async Task<RentResponseDTO> GetRentById(string id)
         {
-            return await _rentService.GetRentInfoById(id, HttpContext.User.Claims.First(x=>x.ValueType == ClaimTypes.Name).Value);
+            return await _rentService.GetRentInfoById(id, HttpContext.User.Claims.First().Value);
         }
 
         [HttpGet("MyHistory")]
         public async Task<IEnumerable<RentResponseDTO>> GetRentHistoryForUser()
         {
-            return await _rentService.GetRentInfoForUser(HttpContext.User.Claims.First(x => x.ValueType == ClaimTypes.Name).Value);
+            return await _rentService.GetRentInfoForUser(HttpContext.User.Claims.First().Value);
         }
 
         [HttpGet("TransportHistory/{id}")]
         public async Task<IEnumerable<RentResponseDTO>> GetRentHistoryForTransport(string id)
         {
-            return await _rentService.GetRentInfoForTransport(id, HttpContext.User.Claims.First(x => x.ValueType == ClaimTypes.Name).Value);
+            return await _rentService.GetRentInfoForTransport(id, HttpContext.User.Claims.First().Value);
         }
 
         [HttpPost("New/{id}")]
         public async Task<IActionResult> CreateNewRent([FromQuery(Name = "rentType")]string rentType, string id)
         {
-            await _rentService.RentTransport(id, rentType, HttpContext.User.Claims.First(x => x.ValueType == ClaimTypes.Name).Value);
-            return Ok();
+            var res = await _rentService.RentTransport(id, rentType, HttpContext.User.Claims.First().Value);
+            return Ok(res);
         }
         [HttpPost("End/{id}")]
         public async Task<IActionResult> EndRent(string id,

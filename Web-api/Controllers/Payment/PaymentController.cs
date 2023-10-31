@@ -21,10 +21,10 @@ namespace VolgaIT_2023_SemiFinal.Controllers.Payment
         [Authorize]
         public async Task DobavitDengi(string id)
         {
-            var Role = HttpContext.User.Claims.First(x => x.ValueType == ClaimTypes.Role).Value;
+             var Role = HttpContext.User.Claims.Skip(1).First().Value.ToString();
 
             if (Role == "Admin") await _paymentService.AddMoney(id);
-            else await _paymentService.AddMoney(id, HttpContext.User.Claims.First(x=>x.ValueType == ClaimTypes.Name).Value);
+            else await _paymentService.AddMoney(id, HttpContext.User.Claims.First().Value);
         }
     }
 }

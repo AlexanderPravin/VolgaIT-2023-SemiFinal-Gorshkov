@@ -5,6 +5,7 @@ using Domain.VolgaIT.Entities;
 using Domain.VolgaIT.Options;
 using Domain.VolgaIT.Settings;
 using Infrastructure.VolgaIT;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.CompilerServices;
@@ -20,11 +21,11 @@ namespace App.VolgaIT.Services
         private readonly JWTHelper _jwtHelper;
         private readonly PasswordHelper _passwordHelper;
 
-        public UserService(UnitOfWork unitOfWork, JwtOptions jwtOptions, PasswordHashOptions passwordHashOptions)
+        public UserService(UnitOfWork unitOfWork, IOptions<JwtOptions> jwtOptions, IOptions<PasswordHashOptions> passwordHashOptions)
         {
             _unitOfWork = unitOfWork;
             _passwordHelper = new PasswordHelper(passwordHashOptions);
-            _jwtHelper = new JWTHelper(jwtOptions);
+            _jwtHelper = new JWTHelper(jwtOptions.Value);
         }
 
         public async Task RegisterAsync(UserRequestDTO dto)
@@ -64,7 +65,7 @@ namespace App.VolgaIT.Services
             user = await _unitOfWork.UserRepository.GetEntityByAsync(x => x.Login == login) ?? throw new ArgumentException($"Can`t find user by {login}");
 
             user.Login = dto.UserName;
-            user.Password = dto.Password;
+            user.Password = _passwordHelper.GetPassword(dto.Password);
 
             _unitOfWork.UserRepository.UpdateEntity(user);
 

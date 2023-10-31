@@ -1,4 +1,5 @@
 ﻿using Domain.VolgaIT.Options;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,10 @@ namespace App.VolgaIT.Helpers
     {
         private readonly PasswordHashOptions _passwordHashOptions;
 
-        public PasswordHelper(PasswordHashOptions passwordHashOptions)
+        public PasswordHelper(IOptions<PasswordHashOptions> passwordHashOptions)
         {
-            _passwordHashOptions = passwordHashOptions;
+            _passwordHashOptions = new PasswordHashOptions();
+
         }
 
         public string GetPassword(string password)
